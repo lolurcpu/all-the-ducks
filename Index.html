@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>All of the Ducks</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 20px;
+      background: #e0f7fa;
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    h1 {
+      color: #00695c;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 20px;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <h1>ALL of the DUCKS 🦆</h1>
+  <div class="gallery" id="duckGallery"></div>
+
+  <script>
+    const duckGallery = document.getElementById('duckGallery');
+    let duckCount = 0;
+
+    function createDuckImage(index) {
+      const img = document.createElement('img');
+      img.loading = 'lazy';
+      img.alt = `Duck ${index}`;
+      img.src = `https://loremflickr.com/320/240/duck?lock=${index}`;
+      return img;
+    }
+
+    function loadMoreDucks(amount = 50) {
+      for (let i = 0; i < amount; i++) {
+        duckCount++;
+        duckGallery.appendChild(createDuckImage(duckCount));
+      }
+    }
+
+    // Initial load
+    loadMoreDucks();
+
+    // Lazy infinite scroll
+    window.addEventListener('scroll', () => {
+      if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 500) {
+        loadMoreDucks();
+      }
+    });
+  </script>
+</body>
+</html>
